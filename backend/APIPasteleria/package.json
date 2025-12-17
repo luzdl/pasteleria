@@ -4,7 +4,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "create-admins": "node create-admins/create-admins.js"
+    "create-admins": "node create-admins/create-admins.js",
+
+    
+    "test": "jest",
+    "test:coverage": "jest --coverage --coverageReporters=lcov"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -16,5 +20,9 @@
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.3.0",
     "pdfkit": "^0.17.2"
+  },
+  "devDependencies": {
+    
+    "jest": "^29.7.0"
   }
 }
