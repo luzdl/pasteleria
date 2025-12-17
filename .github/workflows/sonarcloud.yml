@@ -8,6 +8,14 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+env:
+  CI_DB_NAME: pasteleriadb
+  CI_DB_USER: ciuser
+  CI_DB_PASSWORD: cipassword123
+  CI_TEST_USER: testuser
+  CI_TEST_PASSWORD: testpass123
+  CI_TEST_ROLE: ventas
+
 jobs:
   sonarcloud:
     name: Build, Test & SonarCloud
@@ -17,17 +25,18 @@ jobs:
       mysql:
         image: mysql:8
         env:
-          MYSQL_DATABASE: ${{ secrets.DB_NAME }}
-          MYSQL_USER: ${{ secrets.DB_USER }}
-          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_DATABASE: pasteleriadb
+          MYSQL_USER: ciuser
+          MYSQL_PASSWORD: cipassword123
           MYSQL_ROOT_PASSWORD: rootpass
+          MYSQL_ALLOW_EMPTY_PASSWORD: "no"
         ports:
           - 3306:3306
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5
+          --health-retries=10
 
     steps:
       - name: Checkout repository
@@ -49,7 +58,7 @@ jobs:
       - name: Wait for MySQL to be ready
         run: |
           for i in {1..30}; do
-            if mysqladmin ping -h 127.0.0.1 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} --silent 2>/dev/null; then
+            if mysqladmin ping -h 127.0.0.1 -u${{ env.CI_DB_USER }} -p${{ env.CI_DB_PASSWORD }} --silent 2>/dev/null; then
               echo "MySQL is ready!"
               break
             fi
@@ -62,12 +71,12 @@ jobs:
         env:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          TEST_LOGIN_USER: ${{ secrets.TEST_LOGIN_USER }}
-          TEST_LOGIN_PASSWORD: ${{ secrets.TEST_LOGIN_PASSWORD }}
-          TEST_LOGIN_ROLE: ${{ secrets.TEST_LOGIN_ROLE }}
+          DB_USER: ${{ env.CI_DB_USER }}
+          DB_PASSWORD: ${{ env.CI_DB_PASSWORD }}
+          DB_NAME: ${{ env.CI_DB_NAME }}
+          TEST_LOGIN_USER: ${{ env.CI_TEST_USER }}
+          TEST_LOGIN_PASSWORD: ${{ env.CI_TEST_PASSWORD }}
+          TEST_LOGIN_ROLE: ${{ env.CI_TEST_ROLE }}
         run: node scripts/seed-ci.js
 
       - name: Run tests with coverage
@@ -75,11 +84,11 @@ jobs:
         env:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          TEST_LOGIN_USER: ${{ secrets.TEST_LOGIN_USER }}
-          TEST_LOGIN_PASSWORD: ${{ secrets.TEST_LOGIN_PASSWORD }}
+          DB_USER: ${{ env.CI_DB_USER }}
+          DB_PASSWORD: ${{ env.CI_DB_PASSWORD }}
+          DB_NAME: ${{ env.CI_DB_NAME }}
+          TEST_LOGIN_USER: ${{ env.CI_TEST_USER }}
+          TEST_LOGIN_PASSWORD: ${{ env.CI_TEST_PASSWORD }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: npm run test:coverage
 
