@@ -20,6 +20,10 @@ jobs:
   sonarcloud:
     name: Build, Test & SonarCloud
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
 
     services:
       mysql:
@@ -91,6 +95,15 @@ jobs:
           TEST_LOGIN_PASSWORD: ${{ env.CI_TEST_PASSWORD }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: npm run test:ci
+
+      - name: Test Report (JUnit)
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Jest Tests
+          path: backend/APIPasteleria/test-results/junit.xml
+          reporter: java-junit
+          fail-on-error: true
 
       - name: Upload test results (JUnit XML)
         uses: actions/upload-artifact@v4
