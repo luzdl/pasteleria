@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 
 describe('CU_7 - Imprimir factura (caso exitoso)', () => {
   it('completa venta, genera PDF y prepara para impresión', async () => {
-    const username = `ventas_print_${Date.now()}`;
-    const password = 'PrintPass123';
+    const username = `diegoventas${Date.now()}`;
+    const password = 'admin12345678';
     const productName = `FacturaTestProd_${Date.now()}`;
 
     // Crear usuario ventas

@@ -124,8 +124,8 @@ jobs:
           path: backend/APIPasteleria/coverage/
           retention-days: 30
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+      - name: SonarCloud Scan (sonarqube-scan-action)
+        uses: sonarqube/sonarqube-scan-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
