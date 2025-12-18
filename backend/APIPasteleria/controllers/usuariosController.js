@@ -7,7 +7,7 @@ async function login(req, res) {
 
   const { username, password } = req.body;
   if (!username || !password) 
-    return res.status(400).json({ mensaje: "Faltan credenciales" });
+    return res.status(400).json({ mensaje: "Debe ingresar usuario y contraseña" });
 
   try {
     // Consulta al usuario en la BD

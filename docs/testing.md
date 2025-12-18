@@ -33,22 +33,23 @@ Antes de ejecutar las pruebas, el script `scripts/seed-ci.js` prepara la base de
 
 ## Convención de Nombres
 
-Los tests siguen la convención: `CU{XX}-CP{YY} {Descripción}`
+Los tests siguen la convención: `CU{N}-CP{N} {Descripción}`
 
-- **CU**: Caso de Uso (ej: CU01 = Autenticación)
+- **CU**: Caso de Uso (ej: CU1 = Autenticación)
 - **CP**: Caso de Prueba dentro del CU
 
-Ejemplo: `CU01-CP01 Login exitoso con credenciales válidas`
+Ejemplo: `CU1-CP1 Login exitoso con credenciales válidas`
 
 ## Tabla de Trazabilidad CU/CP → Tests
 
-### CU01 - Autenticación de Usuarios
+### CU1 - Autenticación de Usuarios
 
 | ID | Caso de Prueba | Archivo | Nombre del Test | Precondiciones | Resultado Esperado |
 |----|----------------|---------|-----------------|----------------|-------------------|
-| CU01-CP01 | Login exitoso | `__tests__/CU_1/auth.login.success.test.js` | `CU01-CP01 Login exitoso con credenciales válidas` | Usuario seedeado en BD | Status 200, token JWT en respuesta |
-| CU01-CP02 | Login fallido - usuario inexistente | `__tests__/CU_1/auth.login.failure.test.js` | `CU01-CP02 Login fallido con usuario inexistente` | - | Status 401, mensaje de error |
-| CU01-CP03 | Login fallido - contraseña incorrecta | `__tests__/CU_1/auth.login.failure.test.js` | `CU01-CP03 Login fallido con contraseña incorrecta` | Usuario seedeado en BD | Status 401, mensaje de error |
+| CU1-CP1 | Login exitoso | `__tests__/CU_1/auth.login.success.test.js` | `CU1-CP1 Login exitoso con credenciales válidas` | Usuario seedeado en BD | Status 200, token JWT en respuesta |
+| CU1-CP2 | Campo vacío (falta usuario) | `__tests__/CU_1/auth.login.empty-field.test.js` | `CU1-CP2 Campo vacío - Debe ingresar usuario y contraseña` | - | Status 400, mensaje "Debe ingresar usuario y contraseña" |
+| CU1-CP3 | Campo vacío (falta contraseña) | `__tests__/CU_1/auth.login.empty-password.test.js` | `CU1-CP3 Campo vacío - Falta contraseña` | - | Status 400, mensaje "Debe ingresar usuario y contraseña" |
+| CU1-CP4 | Contraseña inválida | `__tests__/CU_1/auth.login.wrong-password.test.js` | `CU1-CP4 Contraseña inválida - Contraseña incorrecta` | Usuario existente en BD | Status 401, mensaje "Contraseña incorrecta" |
 
 ### CU02 - Gestión de Productos
 

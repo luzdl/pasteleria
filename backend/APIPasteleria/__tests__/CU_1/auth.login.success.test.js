@@ -2,8 +2,8 @@ const request = require("supertest");
 const app = require("../../app");
 const jwt = require("jsonwebtoken");
 
-describe("CU01 - Autenticación de Usuarios", () => {
-  it("CU01-CP01 Login exitoso con credenciales válidas", async () => {
+describe("CU1 - Autenticación de Usuarios", () => {
+  it("CU1-CP1 Login exitoso con credenciales válidas", async () => {
     const username = process.env.TEST_LOGIN_USER || "testuser";
     const password = process.env.TEST_LOGIN_PASSWORD || "testpass";
     const expectedRole = process.env.TEST_LOGIN_ROLE || "ventas";
