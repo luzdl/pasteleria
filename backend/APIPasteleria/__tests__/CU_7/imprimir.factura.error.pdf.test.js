@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 // y otra con 'pdfkit' mockeado solo para el endpoint del PDF.
 const realApp = require('../../app');
 
-describe('CU_7 - Imprimir factura (fallo al generar PDF)', () => {
+describe('CU_7 - Imprimir factura-fallo al generar PDF', () => {
   let compraId, userId, productId, token;
 
   afterAll(async () => {
