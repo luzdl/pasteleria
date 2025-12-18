@@ -15,6 +15,17 @@ const getFacturas = async (req, res) => {
 
         const [[{ total }]] = await db.query("SELECT COUNT(*) as total FROM compras");
 
+        // Si no hay facturas, devolver un mensaje explícito para que la UI lo muestre
+        if (!rows || rows.length === 0) {
+            return res.json({
+                facturas: [],
+                total,
+                page,
+                limit,
+                message: 'No hay facturas registradas'
+            });
+        }
+
         res.json({
             facturas: rows,
             total,
