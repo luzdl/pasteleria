@@ -20,6 +20,7 @@ describe("CU05 - Facturar", () => {
 
   let token;
   let testUserId;
+  const productoNombre = "Pan de Masa Madre";
 
   beforeAll(async () => {
     const jwtSecret = process.env.JWT_SECRET || "secret";
@@ -32,6 +33,21 @@ describe("CU05 - Facturar", () => {
       jwtSecret,
       { expiresIn: "1h" }
     );
+
+    // Precondición: Asegurar que existe la categoría y el producto de prueba
+    try {
+      await pool.query(
+        "INSERT IGNORE INTO categorias (id, nombre) VALUES (2, 'Pan')"
+      );
+      await pool.query(
+        `INSERT INTO productos (nombre, categoria_id, precio_unitario, stock, estado)
+         VALUES (?, 2, 3.50, 100, 'disponible')
+         ON DUPLICATE KEY UPDATE stock = 100, estado = 'disponible'`,
+        [productoNombre]
+      );
+    } catch (error) {
+      // Ignorar si falla
+    }
   });
 
   beforeEach(async () => {
@@ -43,16 +59,7 @@ describe("CU05 - Facturar", () => {
   });
 
   it("CP-17 - Agregar producto al carrito exitosamente", async () => {
-    // Precondición: Obtener un producto existente con stock suficiente
-    const [productos] = await pool.query(
-      "SELECT nombre FROM productos WHERE stock > 0 LIMIT 1"
-    );
-    
-    // Verificar precondición: existe al menos 1 producto con stock
-    expect(productos.length).toBeGreaterThan(0);
-    
-    // Datos de entrada según CP-17 (usar producto existente)
-    const productoNombre = productos[0].nombre;
+    // Datos de entrada según CP-17
     const cantidad = 1;
 
     const requestBody = {
