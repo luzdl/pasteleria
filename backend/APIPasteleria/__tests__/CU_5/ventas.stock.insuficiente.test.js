@@ -53,14 +53,7 @@ describe("CU05 - Facturar", () => {
     expect(response.body).toHaveProperty("mensaje");
 
     // Verificar que el mensaje indica problema de stock
-    const mensajeError = response.body.mensaje.toLowerCase();
-    expect(
-      mensajeError.includes("stock") ||
-      mensajeError.includes("cantidad") ||
-      mensajeError.includes("excede") ||
-      mensajeError.includes("disponible") ||
-      mensajeError.includes("insuficiente")
-    ).toBe(true);
+    expect(response.body.mensaje.toLowerCase()).toMatch(/stock|cantidad|excede|disponible|insuficiente/);
 
     // Verificar que NO se devuelve un producto agregado
     expect(response.body.producto).toBeUndefined();

@@ -50,10 +50,7 @@ describe("CU05 - Facturar", () => {
     expect(response.body).toHaveProperty("producto");
 
     // Verificar que el mensaje indica éxito
-    expect(
-      response.body.mensaje === "Producto agregado al carrito" ||
-      response.body.mensaje === "Cantidad del producto actualizada en el carrito"
-    ).toBe(true);
+    expect(["Producto agregado al carrito", "Cantidad del producto actualizada en el carrito"]).toContain(response.body.mensaje);
 
     // Verificar estructura del producto retornado
     expect(response.body.producto).toHaveProperty("nombre");

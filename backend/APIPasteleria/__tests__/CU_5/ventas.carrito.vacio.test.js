@@ -77,14 +77,7 @@ describe("CU05 - Facturar", () => {
     expect(pagoEfectivoResponse.body).toHaveProperty("mensaje");
 
     // Verificar que el mensaje indica que el carrito está vacío
-    const mensajeError = pagoEfectivoResponse.body.mensaje.toLowerCase();
-    expect(
-      mensajeError.includes("vacío") ||
-      mensajeError.includes("vacio") ||
-      mensajeError.includes("carrito") ||
-      mensajeError.includes("empty") ||
-      mensajeError.includes("producto")
-    ).toBe(true);
+    expect(pagoEfectivoResponse.body.mensaje.toLowerCase()).toMatch(/vacío|vacio|carrito|empty|producto/);
   });
 
   it("CP-19b - No se puede pagar con método digital con carrito vacío", async () => {
@@ -111,13 +104,7 @@ describe("CU05 - Facturar", () => {
       expect(response.body).toHaveProperty("mensaje");
 
       // Verificar mensaje de carrito vacío
-      const mensaje = response.body.mensaje.toLowerCase();
-      expect(
-        mensaje.includes("vacío") ||
-        mensaje.includes("vacio") ||
-        mensaje.includes("carrito") ||
-        mensaje.includes("empty")
-      ).toBe(true);
+      expect(response.body.mensaje.toLowerCase()).toMatch(/vacío|vacio|carrito|empty/);
     }
   });
 
