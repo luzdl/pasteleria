@@ -97,12 +97,15 @@ jobs:
         run: npm run test:ci
 
       - name: Test Report (JUnit)
-        uses: dorny/test-reporter@v1
+        uses: dorny/test-reporter@v2
         if: always()
         with:
           name: Jest Tests
           path: backend/APIPasteleria/test-results/junit.xml
           reporter: java-junit
+          list-suites: all
+          list-tests: all
+          use-actions-summary: true
           fail-on-error: true
 
       - name: Upload test results (JUnit XML)
