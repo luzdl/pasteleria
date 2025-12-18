@@ -30,6 +30,7 @@
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.js"
     ],
+    "testSequencer": "<rootDir>/jest.sequencer.js",
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/jest.setup.js"
     ]
