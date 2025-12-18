@@ -84,6 +84,12 @@ Ejemplo: `CU1-CP1 Login exitoso con credenciales válidas`
 | CU06-CP01 | Reporte de ventas | `__tests__/CU_6/reportes.test.js` | `CU06-CP01 Obtener reporte de ventas` | - | Status 200, datos del reporte |
 | CU06-CP02 | Reporte de inventario | `__tests__/CU_6/reportes.test.js` | `CU06-CP02 Obtener reporte de inventario` | - | Status 200, datos del reporte |
 
+### CU6 - Gestionar Pagos
+
+| ID | Caso de Prueba | Archivo | Nombre del Test | Precondiciones | Resultado Esperado |
+|----|----------------|---------|-----------------|----------------|-------------------|
+| CU6-CP21 | Selección método Efectivo y confirmar | `__tests__/CU_6/pagos.efectivo.seleccionar-confirmar.test.js` | `CU6-CP21 Selección de método: Efectivo - Confirmación` | Usuario rol ventas + carrito total 4.00 | Status 200 + mensaje "Método efectivo seleccionado, falta monto recibido" y luego "Pago en efectivo confirmado" |
+
 ## Ejecución de Pruebas
 
 ### Local
