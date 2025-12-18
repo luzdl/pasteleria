@@ -43,8 +43,16 @@ describe("CU05 - Facturar", () => {
   });
 
   it("CP-17 - Agregar producto al carrito exitosamente", async () => {
-    // Datos de entrada según CP-17
-    const productoNombre = process.env.TEST_PRODUCTO_NOMBRE || "Pan de Masa Madre";
+    // Precondición: Obtener un producto existente con stock suficiente
+    const [productos] = await pool.query(
+      "SELECT nombre FROM productos WHERE stock > 0 LIMIT 1"
+    );
+    
+    // Verificar precondición: existe al menos 1 producto con stock
+    expect(productos.length).toBeGreaterThan(0);
+    
+    // Datos de entrada según CP-17 (usar producto existente)
+    const productoNombre = productos[0].nombre;
     const cantidad = 1;
 
     const requestBody = {
@@ -95,7 +103,7 @@ describe("CU05 - Facturar", () => {
 
     // Verificar que el producto agregado está en el carrito
     const productoEnCarrito = carritoResponse.body.find(
-      item => item.nombre.toLowerCase().includes(productoNombre.toLowerCase().split(" ")[0])
+      item => item.nombre === productoNombre
     );
     expect(productoEnCarrito).toBeDefined();
 
