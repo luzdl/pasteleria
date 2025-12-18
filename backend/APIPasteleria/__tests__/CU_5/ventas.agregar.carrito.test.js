@@ -1,6 +1,7 @@
 const request = require("supertest");
 const app = require("../../app");
 const jwt = require("jsonwebtoken");
+const pool = require("../../db/db");
 
 describe("CU05 - Facturar", () => {
   /**
@@ -11,23 +12,37 @@ describe("CU05 - Facturar", () => {
    *           existente y agregarlo al carrito mostrando subtotal y total.
    * Precondiciones: Usuario autenticado como Administrador de Ventas. 
    *                 Existe al menos 1 producto registrado con stock suficiente.
+   * Valores de entrada: Producto: Pan de Masa Madre, Cantidad: 1
    * Resultado esperado: El producto se agrega al carrito, se muestra en la tabla 
    *                     y el Total se actualiza correctamente.
    * Postcondiciones: Carrito queda activo con 1 ítem agregado.
    */
-  it("CP-17 - Agregar producto al carrito exitosamente", async () => {
+
+  let token;
+  let testUserId;
+
+  beforeAll(async () => {
     const jwtSecret = process.env.JWT_SECRET || "secret";
-    const testUserId = parseInt(process.env.TEST_USER_ID) || 1;
+    testUserId = parseInt(process.env.TEST_USER_ID) || 1;
     const testUsername = process.env.TEST_LOGIN_USER || "testuser";
     const testRole = process.env.TEST_LOGIN_ROLE || "ventas";
 
-    // Generar token de autenticación para usuario con rol ventas
-    const token = jwt.sign(
+    token = jwt.sign(
       { id: testUserId, username: testUsername, rol: testRole },
       jwtSecret,
       { expiresIn: "1h" }
     );
+  });
 
+  beforeEach(async () => {
+    try {
+      await pool.query("DELETE FROM carrito WHERE usuario_id = ?", [testUserId]);
+    } catch (error) {
+      // Ignorar si falla
+    }
+  });
+
+  it("CP-17 - Agregar producto al carrito exitosamente", async () => {
     // Datos de entrada según CP-17
     const productoNombre = process.env.TEST_PRODUCTO_NOMBRE || "Pan de Masa Madre";
     const cantidad = 1;
