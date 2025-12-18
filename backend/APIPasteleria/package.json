@@ -7,7 +7,7 @@
     "create-admins": "node create-admins/create-admins.js",
     "test": "jest",
     "test:coverage": "jest --coverage --coverageReporters=lcov --coverageReporters=text",
-    "test:ci": "jest --coverage --coverageReporters=lcov --coverageReporters=text --verbose --runInBand --reporters=default --reporters=jest-junit"
+    "test:ci": "jest --coverage --coverageReporters=lcov --coverageReporters=text --verbose --runInBand --reporters=default --reporters=jest-junit --forceExit"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

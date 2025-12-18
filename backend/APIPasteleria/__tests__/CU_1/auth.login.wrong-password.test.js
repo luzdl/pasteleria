@@ -1,8 +1,8 @@
 const request = require("supertest");
 const app = require("../../app");
 
-describe("CU3 - Autenticación de Usuarios", () => {
-  it("CU3-CP4 Contraseña inválida - Contraseña incorrecta", async () => {
+describe("CU1 - Autenticación de Usuarios", () => {
+  it("CU1-CP4 Contraseña inválida - Contraseña incorrecta", async () => {
     const requestBody = {
       username: "diegoventas",
       password: "contrasenamala123",

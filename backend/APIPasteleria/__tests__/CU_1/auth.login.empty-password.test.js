@@ -1,8 +1,8 @@
 const request = require("supertest");
 const app = require("../../app");
 
-describe("CU3 - Autenticación de Usuarios", () => {
-  it("CU3-CP3 Campo vacío - Falta contraseña", async () => {
+describe("CU1 - Autenticación de Usuarios", () => {
+  it("CU1-CP3 Campo vacío - Falta contraseña", async () => {
     const requestBody = {
       username: "admin",
       password: "",
