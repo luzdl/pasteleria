@@ -79,7 +79,7 @@ jobs:
           TEST_LOGIN_ROLE: ${{ env.CI_TEST_ROLE }}
         run: node scripts/seed-ci.js
 
-      - name: Run tests with coverage
+      - name: Run tests with coverage and JUnit report
         working-directory: backend/APIPasteleria
         env:
           DB_HOST: 127.0.0.1
@@ -90,7 +90,23 @@ jobs:
           TEST_LOGIN_USER: ${{ env.CI_TEST_USER }}
           TEST_LOGIN_PASSWORD: ${{ env.CI_TEST_PASSWORD }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        run: npm run test:coverage
+        run: npm run test:ci
+
+      - name: Upload test results (JUnit XML)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-junit
+          path: backend/APIPasteleria/test-results/junit.xml
+          retention-days: 30
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: backend/APIPasteleria/coverage/
+          retention-days: 30
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master

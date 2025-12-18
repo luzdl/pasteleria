@@ -1,8 +1,8 @@
 const request = require("supertest");
-const app = require("../app");
+const app = require("../../app");
 
-describe("Auth Login", () => {
-  it("should login successfully with valid credentials", async () => {
+describe("CU01 - Autenticación de Usuarios", () => {
+  it("CU01-CP01 Login exitoso con credenciales válidas", async () => {
     const username = process.env.TEST_LOGIN_USER || "testuser";
     const password = process.env.TEST_LOGIN_PASSWORD || "testpass";
 
