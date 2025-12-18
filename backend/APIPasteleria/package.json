@@ -25,6 +25,12 @@
     "jest-junit": "^16.0.0",
     "supertest": "^7.1.4"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "<rootDir>/__tests__/jest.setup.js"
+    ]
+  },
   "jest-junit": {
     "outputDirectory": "test-results",
     "outputName": "junit.xml",

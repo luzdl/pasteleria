@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="2" failures="1" errors="0" time="26.045">
+  <testsuite name="CU01 - Autenticación de Usuarios" errors="0" failures="1" skipped="0" timestamp="2025-12-18T02:01:50" time="24.65" tests="1">
+    <testcase classname="CU01 - Autenticación de Usuarios" name="CU01-CP01 Login exitoso con credenciales válidas" time="0.734">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 401
+    at Object.toBe (C:\Users\luces\source\repos\pasteleria\backend\APIPasteleria\__tests__\CU_1\auth.login.success.test.js:24:29)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Smoke test" errors="0" failures="0" skipped="0" timestamp="2025-12-18T02:02:15" time="0.121" tests="1">
+    <testcase classname="Smoke test" name="Jest works correctly" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>
