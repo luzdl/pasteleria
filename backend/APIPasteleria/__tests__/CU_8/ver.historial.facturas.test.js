@@ -4,7 +4,7 @@ const pool = require('../../db/db');
 const bcrypt = require('bcrypt');
 
 describe('CU_8 - Ver historial de facturas', () => {
-  it('muestra la tabla de historial con facturas registradass', async () => {
+  it('muestra la tabla de historial con facturas registradas', async () => {
     // Preparar usuario de ventas de prueba
     const username = `ventas_test_${Date.now()}`;
     const password = 'ventasPass123';
